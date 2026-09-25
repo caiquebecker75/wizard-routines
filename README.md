@@ -20,5 +20,6 @@ O botão **PT / EN** no canto inferior esquerdo troca o idioma de toda a apresen
 
 - Arquivo único, sem build e sem dependências além das fontes do Google (Work Sans e Lato)
 - Palco fixo de 1600x900 escalado para a tela, com layout próprio para celular
-- Cores tiradas do site oficial da Wizard: marinho `#15295A`, amarelo `#FFBA00`, azul `#01A7EF`, creme `#FBF5F2`
+- Identidade da campanha oficial da Wizard: azul `#021167`, vermelho `#E4002B`, azul claro `#00A6ED`, creme `#FBF5F2`, logotipo oficial no cabeçalho
+- Nove fotos do Unsplash em `assets/img`, baixadas para o projeto (sem hotlink), todas com lightbox: clique para ampliar, setas para navegar, ESC ou clique fora para fechar
 - Respeita `prefers-reduced-motion`

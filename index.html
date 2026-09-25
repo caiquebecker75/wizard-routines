@@ -8,21 +8,21 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800;900&family=Lato:wght@400;700&display=swap" rel="stylesheet">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2315295A'/%3E%3Cpath d='M6 11l4 11 6-11 6 11 4-11' stroke='%23FFBA00' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23021167'/%3E%3Cpath d='M6 11l4 11 6-11 6 11 4-11' stroke='%23E4002B' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <style>
 :root{
-  --navy:#15295A;
-  --deep:#021167;
+  --navy:#021167;
+  --deep:#000B4A;
   --indigo:#364085;
-  --yellow:#FFBA00;
-  --sky:#01A7EF;
-  --red:#E70022;
+  --accent:#E4002B;
+  --sky:#00A6ED;
+  --red:#E4002B;
   --green:#00931C;
   --cream:#FBF5F2;
   --paper:#FFFFFF;
-  --ink:#15295A;
-  --muted:#5D6B8C;
-  --line:rgba(21,41,90,.14);
+  --ink:#021167;
+  --muted:#5A6293;
+  --line:rgba(2,17,103,.14);
   --stage-w:1600px;
   --stage-h:900px;
 }
@@ -39,12 +39,21 @@ h1,h2,h3,h4,.num,.eyebrow,.tag,.day-label{font-family:"Work Sans",system-ui,sans
 
 /* ---------- background ---------- */
 .bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
-.bg .arc{position:absolute;border-radius:50%;border:1px solid rgba(21,41,90,.10)}
+.bg .arc{position:absolute;border-radius:50%;border:1px solid rgba(2,17,103,.10)}
 .bg .a1{width:1100px;height:1100px;left:-380px;top:-420px;animation:drift 34s ease-in-out infinite alternate}
-.bg .a2{width:760px;height:760px;right:-260px;bottom:-320px;border-color:rgba(1,167,239,.18);animation:drift 42s ease-in-out infinite alternate-reverse}
-.bg .a3{width:420px;height:420px;right:18%;top:-180px;border-color:rgba(255,186,0,.35);animation:drift 28s ease-in-out infinite alternate}
+.bg .a2{width:760px;height:760px;right:-260px;bottom:-320px;border-color:rgba(0,166,237,.18);animation:drift 42s ease-in-out infinite alternate-reverse}
+.bg .a3{width:420px;height:420px;right:18%;top:-180px;border-color:rgba(228,0,43,.35);animation:drift 28s ease-in-out infinite alternate}
+.bg .blob{position:absolute;filter:blur(2px);animation:morph 26s ease-in-out infinite alternate}
+.bg .b1{width:620px;height:560px;right:-190px;top:-200px;background:rgba(228,0,43,.07);
+  border-radius:58% 42% 38% 62% / 46% 54% 46% 54%}
+.bg .b2{width:700px;height:620px;left:-240px;bottom:-260px;background:rgba(2,17,103,.06);
+  border-radius:42% 58% 63% 37% / 52% 38% 62% 48%;animation-duration:34s;animation-direction:alternate-reverse}
+@keyframes morph{
+  0%{border-radius:58% 42% 38% 62% / 46% 54% 46% 54%;transform:translate3d(0,0,0) rotate(0deg)}
+  100%{border-radius:40% 60% 55% 45% / 58% 42% 58% 42%;transform:translate3d(-26px,22px,0) rotate(9deg)}
+}
 .bg .grain{position:absolute;inset:0;opacity:.35;
-  background-image:radial-gradient(rgba(21,41,90,.10) 1px,transparent 1px);
+  background-image:radial-gradient(rgba(2,17,103,.10) 1px,transparent 1px);
   background-size:26px 26px}
 @keyframes drift{from{transform:translate3d(0,0,0) rotate(0deg)}to{transform:translate3d(38px,26px,0) rotate(12deg)}}
 
@@ -54,16 +63,16 @@ h1,h2,h3,h4,.num,.eyebrow,.tag,.day-label{font-family:"Work Sans",system-ui,sans
 .topbar{top:0}
 .bottombar{bottom:0}
 .topbar > *,.bottombar > *{pointer-events:auto}
-.lockup{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--navy)}
-.lockup svg{display:block}
-.lockup .wm{font-family:"Work Sans";font-weight:800;letter-spacing:.14em;font-size:15px;text-transform:uppercase}
-.lockup .sub{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-top:2px}
+.lockup{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--navy)}
+.lockup img{display:block;width:150px;height:auto}
+.lockup .tagline{font-family:"Work Sans";font-size:10.5px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--muted);padding-left:14px;border-left:1px solid var(--line)}
 .byline{text-align:right;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:700;line-height:1.5}
 .byline b{display:block;color:var(--navy);font-family:"Work Sans";font-weight:800;letter-spacing:.1em;font-size:13px}
 
 .ctrl{display:flex;align-items:center;gap:14px}
 .dots{display:flex;gap:7px}
-.dot{width:26px;height:4px;border-radius:2px;background:rgba(21,41,90,.18);border:0;padding:0;cursor:pointer;transition:background .3s,width .3s}
+.dot{width:26px;height:4px;border-radius:2px;background:rgba(2,17,103,.18);border:0;padding:0;cursor:pointer;transition:background .3s,width .3s}
 .dot.on{background:var(--navy);width:40px}
 .counter{font-family:"Work Sans";font-weight:800;font-size:13px;letter-spacing:.1em;color:var(--navy)}
 .counter span{color:var(--muted);font-weight:600}
@@ -71,7 +80,7 @@ h1,h2,h3,h4,.num,.eyebrow,.tag,.day-label{font-family:"Work Sans",system-ui,sans
   background:var(--paper);color:var(--navy);border-radius:999px;padding:8px 14px;cursor:pointer;transition:.25s}
 .langbtn:hover{border-color:var(--navy);transform:translateY(-1px)}
 .hint{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700}
-.progress{position:fixed;left:0;bottom:0;height:3px;background:var(--yellow);z-index:45;transition:width .5s cubic-bezier(.65,0,.35,1);width:20%}
+.progress{position:fixed;left:0;bottom:0;height:3px;background:var(--accent);z-index:45;transition:width .5s cubic-bezier(.65,0,.35,1);width:20%}
 
 /* ---------- stage ---------- */
 #wrap{position:fixed;inset:0;z-index:10;display:grid;place-items:center}
@@ -85,13 +94,13 @@ h1,h2,h3,h4,.num,.eyebrow,.tag,.day-label{font-family:"Work Sans",system-ui,sans
 /* shared bits */
 .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:11.5px;font-weight:800;letter-spacing:.22em;
   text-transform:uppercase;color:var(--muted)}
-.eyebrow i{width:26px;height:2px;background:var(--yellow);display:block;border-radius:2px}
+.eyebrow i{width:26px;height:2px;background:var(--accent);display:block;border-radius:2px}
 .tag{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
-  border-radius:999px;padding:7px 14px;background:rgba(1,167,239,.12);color:#0B6FA4}
-.tag.past{background:rgba(255,186,0,.22);color:#8A6200}
+  border-radius:999px;padding:7px 14px;background:rgba(0,166,237,.12);color:#0A5F96}
+.tag.past{background:rgba(228,0,43,.22);color:#8A6200}
 .tag.now{background:rgba(0,147,28,.12);color:#046B18}
 .takeaway{font-family:"Work Sans";font-weight:800;line-height:1.06;letter-spacing:-.02em;color:var(--navy);margin:16px 0 0}
-.mark{background:linear-gradient(transparent 62%,rgba(255,186,0,.55) 62%)}
+.mark{background:linear-gradient(transparent 62%,rgba(228,0,43,.55) 62%)}
 .card{background:var(--paper);border:1px solid var(--line);border-radius:14px}
 
 /* ---------- slide 1 ---------- */
@@ -100,7 +109,7 @@ h1,h2,h3,h4,.num,.eyebrow,.tag,.day-label{font-family:"Work Sans",system-ui,sans
 #s1 h1 em{font-style:normal;color:var(--sky)}
 #s1 .names{display:flex;gap:0;margin-top:70px;border-top:2px solid var(--navy)}
 #s1 .nm{flex:1;padding:26px 8px 0;position:relative}
-#s1 .nm::before{content:"";position:absolute;top:-2px;left:0;height:6px;width:0;background:var(--yellow);transition:width 1s .5s cubic-bezier(.2,.7,.3,1)}
+#s1 .nm::before{content:"";position:absolute;top:-2px;left:0;height:6px;width:0;background:var(--accent);transition:width 1s .5s cubic-bezier(.2,.7,.3,1)}
 #s1.active .nm::before{width:86%}
 #s1 .nm h3{font-size:40px;font-weight:900;margin:0;letter-spacing:-.02em}
 #s1 .nm p{margin:8px 0 0;font-size:15.5px;color:var(--muted);max-width:330px;line-height:1.5}
@@ -120,26 +129,26 @@ h1,h2,h3,h4,.num,.eyebrow,.tag,.day-label{font-family:"Work Sans",system-ui,sans
 .day{display:flex;flex-direction:column;gap:14px}
 .day .ic{height:52px;display:flex;align-items:flex-end}
 .day .node{width:13px;height:13px;border-radius:50%;background:var(--paper);border:3px solid var(--navy);margin:13px 0 12px}
-.day.hi .node{background:var(--yellow);border-color:var(--yellow);box-shadow:0 0 0 5px rgba(255,186,0,.22)}
+.day.hi .node{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 5px rgba(228,0,43,.22)}
 .day-label{font-size:12px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--navy)}
 .day-label span{color:var(--muted);font-weight:700}
-.day p{margin:0;font-size:14.5px;line-height:1.48;color:#41527A}
+.day p{margin:0;font-size:14.5px;line-height:1.48;color:#3C4680}
 .day .pill{display:inline-block;font-family:"Work Sans";font-size:9.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;
   color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:3px 8px;margin-top:10px}
 
 /* ---------- slide 3 : loop ---------- */
 .two{display:grid;grid-template-columns:1fr 0.92fr;gap:56px;align-items:center;margin-top:auto;margin-bottom:auto}
 .loopwrap{display:grid;place-items:center}
-.ring{position:relative;width:410px;height:410px}
+.ring{position:relative;width:340px;height:340px}
 .ring > svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .ring .core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;width:200px}
 .ring .core b{display:block;font-family:"Work Sans";font-size:15px;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:var(--navy)}
 .ring .core small{display:block;margin-top:4px;font-size:12px;color:var(--muted);letter-spacing:.06em}
-.orbit{position:absolute;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:9px;width:180px;text-align:center}
-.orbit.o1{left:205px;top:22px}
-.orbit.o2{left:70px;top:248px}
-.orbit.o3{left:340px;top:248px}
-.orbit .bub{width:62px;height:62px;border-radius:50%;background:var(--paper);border:2px solid var(--navy);display:grid;place-items:center}
+.orbit{position:absolute;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;width:164px;text-align:center}
+.orbit.o1{left:170px;top:14px}
+.orbit.o2{left:62px;top:200px}
+.orbit.o3{left:278px;top:200px}
+.orbit .bub{width:56px;height:56px;border-radius:50%;background:var(--paper);border:2px solid var(--navy);display:grid;place-items:center}
 .orbit span{font-family:"Work Sans";font-size:13.5px;font-weight:800;color:var(--navy);line-height:1.3;
   background:var(--cream);padding:3px 7px;border-radius:5px}
 .weekend{padding:34px 34px 32px}
@@ -154,7 +163,7 @@ h1,h2,h3,h4,.num,.eyebrow,.tag,.day-label{font-family:"Work Sans",system-ui,sans
 .bars{display:grid;grid-template-columns:repeat(7,1fr);gap:12px;align-items:end;height:250px}
 .bar{display:flex;flex-direction:column;justify-content:flex-end;gap:10px;height:100%}
 .bar .fill{border-radius:9px 9px 3px 3px;background:var(--navy);height:0;transition:height 1s cubic-bezier(.2,.7,.3,1);position:relative}
-.bar.rest .fill{background:var(--yellow)}
+.bar.rest .fill{background:var(--accent)}
 .bar small{font-family:"Work Sans";font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:center}
 .legend{display:flex;gap:18px;margin-top:20px}
 .legend i{width:11px;height:11px;border-radius:3px;display:inline-block;margin-right:7px}
@@ -177,13 +186,55 @@ h1,h2,h3,h4,.num,.eyebrow,.tag,.day-label{font-family:"Work Sans",system-ui,sans
 .mrow .th{font-family:"Work Sans";font-size:15px;font-weight:800;color:var(--navy);display:flex;align-items:center;gap:11px}
 .cell{display:flex;align-items:center;gap:11px;padding-right:20px}
 .cell .mk{width:11px;height:11px;border-radius:50%;background:var(--navy);flex-shrink:0}
-.cell.soft .mk{background:transparent;border:2px solid rgba(21,41,90,.28)}
-.cell.star .mk{background:var(--yellow)}
-.cell p{margin:0;font-size:14px;color:#41527A;line-height:1.4}
+.cell.soft .mk{background:transparent;border:2px solid rgba(2,17,103,.28)}
+.cell.star .mk{background:var(--accent)}
+.cell p{margin:0;font-size:14px;color:#3C4680;line-height:1.4}
 .close{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;gap:40px}
 .close .fin{font-family:"Work Sans";font-size:42px;font-weight:900;line-height:1.08;letter-spacing:-.025em;color:var(--navy);margin:0;max-width:900px}
 .signature{text-align:right;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700;line-height:1.7;flex-shrink:0}
 .signature b{display:block;font-family:"Work Sans";font-size:15px;color:var(--navy);letter-spacing:.06em}
+
+/* ---------- photos ---------- */
+.shotbox{position:relative;overflow:hidden;border-radius:10px;background:#e3e7ef;border:1px solid var(--line);
+  margin:0;cursor:pointer}
+.shotbox::after{content:"";position:absolute;inset:0;pointer-events:none;transition:opacity .4s;
+  background:linear-gradient(180deg,rgba(2,17,103,0) 38%,rgba(2,17,103,.55) 100%)}
+.shotbox:hover::after{opacity:.75}
+.shot{display:block;width:100%;height:100%;object-fit:cover;filter:saturate(.9) contrast(1.03);
+  transition:transform .7s cubic-bezier(.2,.7,.3,1)}
+.shotbox:hover .shot{transform:scale(1.06)}
+.shotbox figcaption{position:absolute;left:12px;right:12px;bottom:9px;z-index:2;color:#fff;
+  font-family:"Work Sans";font-weight:800;font-size:11.5px;letter-spacing:.05em;line-height:1.3;
+  text-shadow:0 1px 10px rgba(6,14,36,.6)}
+.shotbox .zoom{position:absolute;top:9px;right:9px;z-index:2;width:26px;height:26px;border-radius:50%;
+  background:rgba(255,255,255,.92);display:grid;place-items:center;opacity:0;transform:scale(.8);transition:.3s}
+.shotbox:hover .zoom{opacity:1;transform:none}
+.strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px}
+.strip .shotbox{height:128px}
+.igor-shot{width:344px;height:116px;margin-top:16px}
+.weekend .banner{height:136px;margin:-34px -34px 22px;border-radius:13px 13px 0 0;border:0;border-bottom:1px solid var(--line)}
+.rc .thumb{width:76px;height:54px;flex-shrink:0}
+.rc .thumb figcaption{display:none}
+.credit{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700;opacity:.75}
+
+/* ---------- lightbox ---------- */
+.lb{position:fixed;inset:0;z-index:100;background:rgba(8,14,32,.93);display:none;
+  align-items:center;justify-content:center;padding:60px}
+.lb.on{display:flex;animation:lbin .3s ease both}
+@keyframes lbin{from{opacity:0}to{opacity:1}}
+.lb img{max-width:90vw;max-height:80vh;border-radius:12px;box-shadow:0 30px 80px rgba(0,0,0,.5);
+  animation:lbup .45s cubic-bezier(.2,.7,.3,1) both}
+@keyframes lbup{from{opacity:0;transform:scale(.94) translateY(14px)}to{opacity:1;transform:none}}
+.lb .cap{position:absolute;bottom:34px;left:0;right:0;text-align:center;color:#fff;
+  font-family:"Work Sans";font-weight:700;font-size:14px;letter-spacing:.04em;padding:0 40px}
+.lb .cap small{display:block;margin-top:5px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;opacity:.6}
+.lb button{position:absolute;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);color:#fff;
+  width:46px;height:46px;border-radius:50%;font-size:22px;line-height:1;cursor:pointer;transition:.25s;
+  font-family:"Work Sans";display:grid;place-items:center}
+.lb button:hover{background:rgba(255,255,255,.22)}
+.lb .x{top:26px;right:26px}
+.lb .p{left:26px;top:50%;margin-top:-23px}
+.lb .n{right:26px;top:50%;margin-top:-23px}
 
 /* ---------- icon animations ---------- */
 .ia{overflow:visible}
@@ -206,8 +257,8 @@ h1,h2,h3,h4,.num,.eyebrow,.tag,.day-label{font-family:"Work Sans",system-ui,sans
 /* ---------- cursor ---------- */
 .cur,.cur-dot{position:fixed;z-index:90;pointer-events:none;border-radius:50%;left:0;top:0}
 .cur{width:34px;height:34px;border:1.5px solid var(--navy);margin:-17px 0 0 -17px;transition:width .25s,height .25s,margin .25s,background .25s,border-color .25s}
-.cur-dot{width:6px;height:6px;background:var(--yellow);margin:-3px 0 0 -3px}
-.cur.big{width:64px;height:64px;margin:-32px 0 0 -32px;background:rgba(255,186,0,.14);border-color:var(--yellow)}
+.cur-dot{width:6px;height:6px;background:var(--accent);margin:-3px 0 0 -3px}
+.cur.big{width:64px;height:64px;margin:-32px 0 0 -32px;background:rgba(228,0,43,.14);border-color:var(--accent)}
 @media (hover:none),(pointer:coarse){.cur,.cur-dot{display:none}}
 
 /* ---------- mobile ---------- */
@@ -215,7 +266,16 @@ h1,h2,h3,h4,.num,.eyebrow,.tag,.day-label{font-family:"Work Sans",system-ui,sans
   body{overflow:auto}
   #wrap{position:static;display:block}
   #stage{width:100%;height:auto;transform:none!important;overflow:visible}
-  .slide{position:static;opacity:1;visibility:visible;min-height:auto;padding:96px 20px 60px;border-bottom:1px solid var(--line)}
+  .slide{position:static;opacity:1;visibility:visible;min-height:auto;padding:88px 20px 56px;border-bottom:1px solid var(--line)}
+  .topbar{padding:14px 16px}
+  .lockup img{width:104px}
+  .lockup .tagline{display:none}
+  .byline{font-size:9.5px;letter-spacing:.1em}
+  .byline b{font-size:11px}
+  .strip{grid-template-columns:repeat(2,1fr);gap:10px;margin-top:20px}
+  .strip .shotbox{height:112px}
+  .igor-shot{width:100%;height:150px}
+  .weekend .banner{height:120px;margin:-24px -20px 18px}
   .slide.active .r{animation:none}
   #s1 h1{font-size:44px}
   #s1 .names{flex-direction:column;margin-top:36px}
@@ -262,19 +322,14 @@ h1,h2,h3,h4,.num,.eyebrow,.tag,.day-label{font-family:"Work Sans",system-ui,sans
 <body>
 
 <div class="bg" aria-hidden="true">
+  <div class="blob b1"></div><div class="blob b2"></div>
   <div class="arc a1"></div><div class="arc a2"></div><div class="arc a3"></div><div class="grain"></div>
 </div>
 
 <header class="topbar">
-  <div class="lockup" aria-label="Wizard English class">
-    <svg width="34" height="34" viewBox="0 0 32 32" aria-hidden="true">
-      <rect width="32" height="32" rx="7" fill="#15295A"/>
-      <path d="M6 11l4 11 6-11 6 11 4-11" stroke="#FFBA00" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-    <div>
-      <div class="wm">Wizard</div>
-      <div class="sub">English Class</div>
-    </div>
+  <div class="lockup" aria-label="Wizard by Pearson">
+    <img src="assets/img/wizard-logo.png" alt="Wizard by Pearson" width="150" height="33">
+    <span class="tagline">English Class</span>
   </div>
   <div class="byline">
     <b>Caique Becker</b>
@@ -325,53 +380,60 @@ h1,h2,h3,h4,.num,.eyebrow,.tag,.day-label{font-family:"Work Sans",system-ui,sans
       </div>
     </div>
 
+    <div class="strip r" style="animation-delay:.24s">
+      <figure class="shotbox"><img class="shot" src="assets/img/books.jpg" alt="Hands turning the pages of a book next to a notebook" loading="lazy"><span class="zoom" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="#021167" stroke-width="2" stroke-linecap="round"><circle cx="7" cy="7" r="4.6"/><path d="M10.6 10.6L14 14"/></svg></span><figcaption data-pt="Sábado: aula de inglês">Saturday: English class</figcaption></figure>
+      <figure class="shotbox"><img class="shot" src="assets/img/church.jpg" alt="Interior of a gothic cathedral with a rose window" loading="lazy"><span class="zoom" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="#021167" stroke-width="2" stroke-linecap="round"><circle cx="7" cy="7" r="4.6"/><path d="M10.6 10.6L14 14"/></svg></span><figcaption data-pt="Domingo: igreja na catedral">Sunday: church at the cathedral</figcaption></figure>
+      <figure class="shotbox"><img class="shot" src="assets/img/road.jpg" alt="A car driving on an open road" loading="lazy"><span class="zoom" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="#021167" stroke-width="2" stroke-linecap="round"><circle cx="7" cy="7" r="4.6"/><path d="M10.6 10.6L14 14"/></svg></span><figcaption data-pt="Domingo: almoço em Serra Azul">Sunday: lunch in Serra Azul</figcaption></figure>
+      <figure class="shotbox"><img class="shot" src="assets/img/meeting.jpg" alt="People taking notes around a meeting table" loading="lazy"><span class="zoom" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="#021167" stroke-width="2" stroke-linecap="round"><circle cx="7" cy="7" r="4.6"/><path d="M10.6 10.6L14 14"/></svg></span><figcaption data-pt="De segunda a sexta: dez reuniões">Monday to Friday: ten meetings</figcaption></figure>
+    </div>
+
     <div class="rail r" style="animation-delay:.3s">
       <div class="line"><b></b></div>
       <div class="days">
         <div class="day hi">
-          <div class="ic"><svg class="ia" width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#15295A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path class="bob" d="M7 10h11a4 4 0 0 1 4 4v17a3 3 0 0 0-3-3H7z"/><path class="bob" d="M37 10H26a4 4 0 0 0-4 4v17a3 3 0 0 1 3-3h12z"/><circle class="pulse" cx="22" cy="6" r="3" fill="#FFBA00" stroke="none"/></svg></div>
+          <div class="ic"><svg class="ia" width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#021167" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path class="bob" d="M7 10h11a4 4 0 0 1 4 4v17a3 3 0 0 0-3-3H7z"/><path class="bob" d="M37 10H26a4 4 0 0 0-4 4v17a3 3 0 0 1 3-3h12z"/><circle class="pulse" cx="22" cy="6" r="3" fill="#E4002B" stroke="none"/></svg></div>
           <div class="node"></div>
           <div class="day-label">Sat <span>19</span></div>
           <p data-pt="Aula de inglês na Wizard. Depois, manutenções e organização em casa.">English class at Wizard. Then house repairs and tidying up.</p>
           <span class="pill" data-pt="Estudo">Study</span>
         </div>
         <div class="day">
-          <div class="ic"><svg class="ia" width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#15295A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 34V16l11-8 11 8v18"/><path d="M20 34v-8h0"/><path class="pulse" d="M20 5v6M17 8h6" stroke="#FFBA00"/></svg></div>
+          <div class="ic"><svg class="ia" width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#021167" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 34V16l11-8 11 8v18"/><path d="M20 34v-8h0"/><path class="pulse" d="M20 5v6M17 8h6" stroke="#E4002B"/></svg></div>
           <div class="node"></div>
           <div class="day-label">Sun <span>20</span></div>
           <p data-pt="Igreja na Catedral da Sé e viagem para almoçar em Serra Azul com os amigos.">Church at Catedral da Sé, then a trip to Serra Azul to have lunch with friends.</p>
           <span class="pill" data-pt="Fé e amigos">Faith and friends</span>
         </div>
         <div class="day">
-          <div class="ic"><svg class="ia" width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#15295A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="13" r="5"/><circle cx="27" cy="15" r="4"/><path d="M5 32c0-5 4-8 9-8s9 3 9 8"/><path d="M24 32c0-4 3-6.5 7-6.5"/><circle class="pulse" cx="33" cy="9" r="3" fill="#FFBA00" stroke="none"/></svg></div>
+          <div class="ic"><svg class="ia" width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#021167" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="13" r="5"/><circle cx="27" cy="15" r="4"/><path d="M5 32c0-5 4-8 9-8s9 3 9 8"/><path d="M24 32c0-4 3-6.5 7-6.5"/><circle class="pulse" cx="33" cy="9" r="3" fill="#E4002B" stroke="none"/></svg></div>
           <div class="node"></div>
           <div class="day-label">Mon <span>21</span></div>
           <p data-pt="Feedbacks com Paulo Moreira e reunião presencial de recuperação da Agrícola Famosa.">Feedbacks with Paulo Moreira and an in person recovery meeting with Agrícola Famosa.</p>
           <span class="pill" data-pt="Trabalho">Work</span>
         </div>
         <div class="day">
-          <div class="ic"><svg class="ia" width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#15295A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="9" width="28" height="19" rx="3"/><path d="M14 34h12M20 28v6"/><path class="blink" d="M14 16h12M14 21h8" stroke="#01A7EF"/></svg></div>
+          <div class="ic"><svg class="ia" width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#021167" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="9" width="28" height="19" rx="3"/><path d="M14 34h12M20 28v6"/><path class="blink" d="M14 16h12M14 21h8" stroke="#00A6ED"/></svg></div>
           <div class="node"></div>
           <div class="day-label">Tue <span>22</span></div>
           <p data-pt="Reunião de dúvidas do Ariuno com a GO! Comunicação e apresentação do Ariuno.">Ariuno questions meeting with GO! Comunicação and the Ariuno presentation.</p>
           <span class="pill">Ariuno</span>
         </div>
         <div class="day">
-          <div class="ic"><svg class="ia" width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#15295A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 34c7.7 0 14-6.3 14-14S27.7 6 20 6 6 12.3 6 20c0 2.6.7 5 2 7l-1.5 6 6.5-1.6c2 1 4.4 1.6 7 1.6z"/><path class="pulse" d="M20 13v14M13 20h14" stroke="#FFBA00"/></svg></div>
+          <div class="ic"><svg class="ia" width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#021167" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 34c7.7 0 14-6.3 14-14S27.7 6 20 6 6 12.3 6 20c0 2.6.7 5 2 7l-1.5 6 6.5-1.6c2 1 4.4 1.6 7 1.6z"/><path class="pulse" d="M20 13v14M13 20h14" stroke="#E4002B"/></svg></div>
           <div class="node"></div>
           <div class="day-label">Wed <span>23</span></div>
           <p data-pt="Reunião de feedback e reunião de lançamento do site da Alltak.">Feedback meeting and the Alltak website launch meeting.</p>
           <span class="pill">Alltak</span>
         </div>
         <div class="day hi">
-          <div class="ic"><svg class="ia" width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#15295A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="8" width="30" height="20" rx="3"/><path d="M13 34h14"/><path class="grow" d="M12 23v-5M19 23v-9M26 23v-7" stroke="#FFBA00" stroke-width="2.6"/></svg></div>
+          <div class="ic"><svg class="ia" width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#021167" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="8" width="30" height="20" rx="3"/><path d="M13 34h14"/><path class="grow" d="M12 23v-5M19 23v-9M26 23v-7" stroke="#E4002B" stroke-width="2.6"/></svg></div>
           <div class="node"></div>
           <div class="day-label">Thu <span>24</span></div>
           <p data-pt="Ariuno Day, reunião com a Lactalis DPA e visita da Arcode para apresentar monitores.">Ariuno Day, a Lactalis DPA meeting and the Arcode visit to present monitors.</p>
           <span class="pill" data-pt="Dia mais cheio">Busiest day</span>
         </div>
         <div class="day">
-          <div class="ic"><svg class="ia" width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#15295A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6l12 6v9c0 7-5 12-12 14C13 33 8 28 8 21v-9z"/><path class="pulse" d="M15 20l4 4 7-8" stroke="#00931C" stroke-width="2.6"/></svg></div>
+          <div class="ic"><svg class="ia" width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#021167" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6l12 6v9c0 7-5 12-12 14C13 33 8 28 8 21v-9z"/><path class="pulse" d="M15 20l4 4 7-8" stroke="#00931C" stroke-width="2.6"/></svg></div>
           <div class="node"></div>
           <div class="day-label">Fri <span>25</span></div>
           <p data-pt="Onboarding da ABCCOM pela manhã.">ABCCOM onboarding in the morning.</p>
@@ -392,30 +454,32 @@ h1,h2,h3,h4,.num,.eyebrow,.tag,.day-label{font-family:"Work Sans",system-ui,sans
       <div class="loopwrap r" style="animation-delay:.2s">
        <div class="ring">
         <svg viewBox="0 0 320 320" aria-hidden="true">
-          <circle cx="160" cy="160" r="118" fill="none" stroke="rgba(21,41,90,.16)" stroke-width="2"/>
-          <circle class="dash" style="--len:742" cx="160" cy="160" r="118" fill="none" stroke="#01A7EF" stroke-width="3" stroke-linecap="round" transform="rotate(-90 160 160)"/>
+          <circle cx="160" cy="160" r="118" fill="none" stroke="rgba(2,17,103,.16)" stroke-width="2"/>
+          <circle class="dash" style="--len:742" cx="160" cy="160" r="118" fill="none" stroke="#00A6ED" stroke-width="3" stroke-linecap="round" transform="rotate(-90 160 160)"/>
           <g class="spin" style="transform-origin:160px 160px">
-            <circle cx="160" cy="42" r="6" fill="#FFBA00"/>
+            <circle cx="160" cy="42" r="6" fill="#E4002B"/>
           </g>
         </svg>
         <div class="core"><b data-pt="Dias de semana">Weekdays</b><small data-pt="segunda a sexta, em loop">monday to friday, on repeat</small></div>
 
         <div class="orbit o1">
-          <div class="bub"><svg class="ia" width="28" height="28" viewBox="0 0 32 32" fill="none" stroke="#15295A" stroke-width="2" stroke-linecap="round"><rect x="4" y="10" width="24" height="16" rx="2.5"/><path d="M12 10V7a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v3"/><path class="blink" d="M4 17h24" stroke="#01A7EF"/></svg></div>
+          <div class="bub"><svg class="ia" width="28" height="28" viewBox="0 0 32 32" fill="none" stroke="#021167" stroke-width="2" stroke-linecap="round"><rect x="4" y="10" width="24" height="16" rx="2.5"/><path d="M12 10V7a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v3"/><path class="blink" d="M4 17h24" stroke="#00A6ED"/></svg></div>
           <span data-pt="Ele trabalha">He works</span>
         </div>
         <div class="orbit o2">
-          <div class="bub"><svg class="ia" width="28" height="28" viewBox="0 0 32 32" fill="none" stroke="#15295A" stroke-width="2" stroke-linecap="round"><path d="M4 16h3M25 16h3"/><rect class="roll" x="7" y="11" width="4" height="10" rx="1.4"/><rect class="roll" x="21" y="11" width="4" height="10" rx="1.4"/><path class="roll" d="M11 16h10" stroke="#FFBA00" stroke-width="2.6"/></svg></div>
+          <div class="bub"><svg class="ia" width="28" height="28" viewBox="0 0 32 32" fill="none" stroke="#021167" stroke-width="2" stroke-linecap="round"><path d="M4 16h3M25 16h3"/><rect class="roll" x="7" y="11" width="4" height="10" rx="1.4"/><rect class="roll" x="21" y="11" width="4" height="10" rx="1.4"/><path class="roll" d="M11 16h10" stroke="#E4002B" stroke-width="2.6"/></svg></div>
           <span data-pt="Ele treina com o pai">He trains with his dad</span>
         </div>
         <div class="orbit o3">
-          <div class="bub"><svg class="ia" width="28" height="28" viewBox="0 0 32 32" fill="none" stroke="#15295A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path class="bob" d="M5 8h9a3 3 0 0 1 3 3v14a2.4 2.4 0 0 0-2.4-2.4H5z"/><path class="bob" d="M27 8h-9a3 3 0 0 0-3 3v14a2.4 2.4 0 0 1 2.4-2.4H27z"/><circle class="pulse" cx="16" cy="4" r="2.4" fill="#FFBA00" stroke="none"/></svg></div>
+          <div class="bub"><svg class="ia" width="28" height="28" viewBox="0 0 32 32" fill="none" stroke="#021167" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path class="bob" d="M5 8h9a3 3 0 0 1 3 3v14a2.4 2.4 0 0 0-2.4-2.4H5z"/><path class="bob" d="M27 8h-9a3 3 0 0 0-3 3v14a2.4 2.4 0 0 1 2.4-2.4H27z"/><circle class="pulse" cx="16" cy="4" r="2.4" fill="#E4002B" stroke="none"/></svg></div>
           <span data-pt="Ele estuda inglês">He studies English</span>
         </div>
        </div>
+       <figure class="shotbox igor-shot r"><img class="shot" src="assets/img/training.jpg" alt="Two people training together on a gym floor" loading="lazy"><span class="zoom" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="#021167" stroke-width="2" stroke-linecap="round"><circle cx="7" cy="7" r="4.6"/><path d="M10.6 10.6L14 14"/></svg></span><figcaption data-pt="Todo dia de semana: treino com o pai">Every weekday: training with his dad</figcaption></figure>
       </div>
 
       <div class="weekend card r" style="animation-delay:.34s">
+        <figure class="shotbox banner"><img class="shot" src="assets/img/couple.jpg" alt="Two people walking together on a city street at dusk" loading="lazy"><span class="zoom" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="#021167" stroke-width="2" stroke-linecap="round"><circle cx="7" cy="7" r="4.6"/><path d="M10.6 10.6L14 14"/></svg></span><figcaption data-pt="Todo fim de semana: sai com a namorada ou os amigos">Every weekend: out with his girlfriend or his friends</figcaption></figure>
         <h4 data-pt="Todo fim de semana">Every weekend</h4>
         <p class="big" data-pt="Ele sempre sai para algum lugar com a namorada ou com os amigos.">He always goes out somewhere with his girlfriend or with his friends.</p>
         <div class="who">
@@ -424,11 +488,11 @@ h1,h2,h3,h4,.num,.eyebrow,.tag,.day-label{font-family:"Work Sans",system-ui,sans
             <b data-pt="A namorada">His girlfriend</b>
           </div>
           <div class="chip">
-            <svg class="ia" width="26" height="26" viewBox="0 0 32 32" fill="none" stroke="#15295A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><circle cx="22" cy="13" r="3.2"/><path d="M4 26c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/><path d="M21 26c0-3 2.4-5 5.5-5"/></svg>
+            <svg class="ia" width="26" height="26" viewBox="0 0 32 32" fill="none" stroke="#021167" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><circle cx="22" cy="13" r="3.2"/><path d="M4 26c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/><path d="M21 26c0-3 2.4-5 5.5-5"/></svg>
             <b data-pt="Os amigos">His friends</b>
           </div>
           <div class="chip">
-            <svg class="ia" width="26" height="26" viewBox="0 0 32 32" fill="none" stroke="#01A7EF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path class="pulse" d="M16 4v6" stroke="#FFBA00"/><path d="M6 27h20l-2.5-10a7.8 7.8 0 0 0-15 0z"/><path d="M13 27a3 3 0 0 0 6 0"/></svg>
+            <svg class="ia" width="26" height="26" viewBox="0 0 32 32" fill="none" stroke="#00A6ED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path class="pulse" d="M16 4v6" stroke="#E4002B"/><path d="M6 27h20l-2.5-10a7.8 7.8 0 0 0-15 0z"/><path d="M13 27a3 3 0 0 0 6 0"/></svg>
             <b data-pt="Lugares novos">New places</b>
           </div>
         </div>
@@ -462,11 +526,11 @@ h1,h2,h3,h4,.num,.eyebrow,.tag,.day-label{font-family:"Work Sans",system-ui,sans
           <div class="bar rest"><div class="fill" data-h="30%"></div><small>Sun</small></div>
         </div>
         <div class="legend">
-          <div><i style="background:#15295A"></i><span data-pt="Trabalhos da faculdade">College assignments</span></div>
-          <div><i style="background:#FFBA00"></i><span data-pt="Descanso">Rest</span></div>
+          <div><i style="background:#021167"></i><span data-pt="Trabalhos da faculdade">College assignments</span></div>
+          <div><i style="background:#E4002B"></i><span data-pt="Descanso">Rest</span></div>
         </div>
         <div class="nugget">
-          <svg class="ia" width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="#FFBA00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path class="pulse" d="M16 3v3M26 6l-2 2M29 16h-3M6 6l2 2M3 16h3" stroke="#FFBA00"/><path d="M11 24a7 7 0 1 1 10 0l-1 4h-8z" stroke="#fff"/><path d="M13 28h6" stroke="#fff"/></svg>
+          <svg class="ia" width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="#E4002B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path class="pulse" d="M16 3v3M26 6l-2 2M29 16h-3M6 6l2 2M3 16h3" stroke="#E4002B"/><path d="M11 24a7 7 0 1 1 10 0l-1 4h-8z" stroke="#fff"/><path d="M13 28h6" stroke="#fff"/></svg>
           <div>
             <b data-pt="O destaque da semana">The highlight of the week</b><br>
             <span data-pt="Ele criou um projeto novo para uma matéria da faculdade, e esse projeto pode virar renda.">He created a new project for a college subject, and that project can become an income.</span>
@@ -475,16 +539,13 @@ h1,h2,h3,h4,.num,.eyebrow,.tag,.day-label{font-family:"Work Sans",system-ui,sans
       </div>
 
       <div class="recharge">
-        <div class="rc">
-          <svg class="ia" width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="#15295A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="10" width="26" height="13" rx="6"/><path class="roll" d="M9 16.5h4M11 14.5v4" stroke="#01A7EF"/><circle class="pulse" cx="22" cy="15.5" r="1.6" fill="#FFBA00" stroke="none"/><circle class="pulse" cx="25" cy="18.5" r="1.6" fill="#FFBA00" stroke="none"/></svg>
+        <div class="rc"><figure class="shotbox thumb"><img class="shot" src="assets/img/games.jpg" alt="Two hands holding game controllers in front of a TV" loading="lazy"><span class="zoom" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="#021167" stroke-width="2" stroke-linecap="round"><circle cx="7" cy="7" r="4.6"/><path d="M10.6 10.6L14 14"/></svg></span><figcaption data-pt="Games">Games</figcaption></figure>
           <div><b data-pt="Ele jogou videogame">He played some games</b><small data-pt="no fim de semana">on the weekend</small></div>
         </div>
-        <div class="rc">
-          <svg class="ia" width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="#15295A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 26L12 18l5 5 11-13"/><path class="pulse" d="M22 10h6v6" stroke="#00931C"/></svg>
+        <div class="rc"><figure class="shotbox thumb"><img class="shot" src="assets/img/student.jpg" alt="A student with headphones focused on a laptop" loading="lazy"><span class="zoom" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="#021167" stroke-width="2" stroke-linecap="round"><circle cx="7" cy="7" r="4.6"/><path d="M10.6 10.6L14 14"/></svg></span><figcaption data-pt="Planos">Plans</figcaption></figure>
           <div><b data-pt="Ele planejou a carreira">He made career plans</b><small data-pt="para o futuro">for his future</small></div>
         </div>
-        <div class="rc">
-          <svg class="ia" width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="#15295A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="24" height="16" rx="2.5"/><path d="M12 29h8M16 25v4"/><path class="blink" d="M10 14l5 3-5 3z" fill="#FFBA00" stroke="#FFBA00"/></svg>
+        <div class="rc"><figure class="shotbox thumb"><img class="shot" src="assets/img/tv.jpg" alt="An old television glowing at night" loading="lazy"><span class="zoom" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="#021167" stroke-width="2" stroke-linecap="round"><circle cx="7" cy="7" r="4.6"/><path d="M10.6 10.6L14 14"/></svg></span><figcaption data-pt="Clássicos">Classics</figcaption></figure>
           <div><b data-pt="Ele assistiu clássicos">He watched classics</b><small data-pt="temporadas antigas de Dragon Ball">old Dragon Ball seasons</small></div>
         </div>
       </div>
@@ -531,7 +592,8 @@ h1,h2,h3,h4,.num,.eyebrow,.tag,.day-label{font-family:"Work Sans",system-ui,sans
       <div class="signature r" style="animation-delay:.5s">
         <b>Caique · Igor · Carlos</b>
         <span data-pt="Wizard · Aula de inglês">Wizard · English class</span><br>
-        <span data-pt="Setembro de 2026">September 2026</span>
+        <span data-pt="Setembro de 2026">September 2026</span><br>
+        <span class="credit">Photos: Unsplash</span>
       </div>
     </div>
   </section>
@@ -550,6 +612,13 @@ h1,h2,h3,h4,.num,.eyebrow,.tag,.day-label{font-family:"Work Sans",system-ui,sans
   </div>
 </footer>
 <div class="progress" id="prog"></div>
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <button class="x" id="lbx" aria-label="Close">&times;</button>
+  <button class="p" id="lbp" aria-label="Previous image">&lsaquo;</button>
+  <img id="lbimg" alt="">
+  <button class="n" id="lbn" aria-label="Next image">&rsaquo;</button>
+  <div class="cap" id="lbcap"></div>
+</div>
 <div class="cur" id="cc" aria-hidden="true"></div>
 <div class="cur-dot" id="cd" aria-hidden="true"></div>
 
@@ -637,20 +706,52 @@ h1,h2,h3,h4,.num,.eyebrow,.tag,.day-label{font-family:"Work Sans",system-ui,sans
     play(a);
   }
 
+  // lightbox
+  var lb=document.getElementById('lb'),lbimg=document.getElementById('lbimg'),lbcap=document.getElementById('lbcap');
+  var shots=[].slice.call(document.querySelectorAll('.shot')),li=0,lastFocus=null;
+  function capOf(im){var f=im.parentNode.querySelector('figcaption');return f?f.textContent:''}
+  function show(n){
+    li=(n+shots.length)%shots.length;
+    var im=shots[li];
+    lbimg.src=im.currentSrc||im.src; lbimg.alt=im.alt;
+    lbcap.innerHTML=capOf(im)+'<small>'+(li+1)+' / '+shots.length+'</small>';
+  }
+  function openLb(n){lastFocus=document.activeElement;show(n);lb.classList.add('on');document.getElementById('lbx').focus()}
+  function closeLb(){lb.classList.remove('on');lbimg.src='';if(lastFocus)lastFocus.focus()}
+  shots.forEach(function(im,n){
+    im.parentNode.setAttribute('tabindex','0');
+    im.parentNode.setAttribute('role','button');
+    im.parentNode.addEventListener('click',function(e){e.stopPropagation();openLb(n)});
+    im.parentNode.addEventListener('keydown',function(e){
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();e.stopPropagation();openLb(n)}
+    });
+  });
+  document.getElementById('lbx').addEventListener('click',closeLb);
+  document.getElementById('lbp').addEventListener('click',function(e){e.stopPropagation();show(li-1)});
+  document.getElementById('lbn').addEventListener('click',function(e){e.stopPropagation();show(li+1)});
+  lb.addEventListener('click',function(e){if(e.target===lb)closeLb()});
+  function lbOpen(){return lb.classList.contains('on')}
+
   document.addEventListener('keydown',function(e){
+    if(lbOpen()){
+      if(e.key==='Escape'){e.preventDefault();closeLb()}
+      if(e.key==='ArrowRight'){e.preventDefault();show(li+1)}
+      if(e.key==='ArrowLeft'){e.preventDefault();show(li-1)}
+      return;
+    }
     if(['ArrowRight','ArrowDown','PageDown',' ','Enter'].indexOf(e.key)>-1){e.preventDefault();go(i+1)}
     if(['ArrowLeft','ArrowUp','PageUp'].indexOf(e.key)>-1){e.preventDefault();go(i-1)}
     if(e.key==='Home')go(0); if(e.key==='End')go(total-1);
   });
   var lock=false;
   window.addEventListener('wheel',function(e){
-    if(mobile||lock)return;
+    if(mobile||lock||lbOpen())return;
     if(Math.abs(e.deltaY)<18)return;
     lock=true;go(i+(e.deltaY>0?1:-1));
     setTimeout(function(){lock=false},760);
   },{passive:true});
   wrap.addEventListener('click',function(e){
-    if(mobile||e.target.closest('button'))return;
+    if(mobile||lbOpen()||e.target.closest('button')||e.target.closest('.shotbox'))return;
     go(i+1);
   });
   var tx=0,ty=0;
@@ -678,7 +779,7 @@ h1,h2,h3,h4,.num,.eyebrow,.tag,.day-label{font-family:"Work Sans",system-ui,sans
     mx=e.clientX;my=e.clientY;
     cd.style.transform='translate('+mx+'px,'+my+'px)';
     var t=e.target;
-    cc.classList.toggle('big',!!(t.closest('button')||t.closest('.card')||t.closest('.day')||t.closest('.rc')));
+    cc.classList.toggle('big',!!(t.closest('button')||t.closest('.card')||t.closest('.day')||t.closest('.rc')||t.closest('.shotbox')));
   });
   (function loop(){
     cx+=(mx-cx)*.16;cy+=(my-cy)*.16;
