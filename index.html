@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Three Routines</title>
 <meta name="description" content="English class presentation: one week, three routines. Caique, Igor and Carlos.">
+<meta name="theme-color" content="#021167">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Three Routines">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/img/icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800;900&family=Lato:wght@400;700&display=swap" rel="stylesheet">
@@ -28,6 +35,7 @@
 }
 *{box-sizing:border-box}
 html,body{height:100%}
+@supports (height:100dvh){html,body{height:100dvh}}
 body{
   margin:0;background:var(--cream);color:var(--ink);
   font-family:"Lato",system-ui,sans-serif;
@@ -59,9 +67,12 @@ h1,h2,h3,h4,.num,.eyebrow,.tag,.day-label{font-family:"Work Sans",system-ui,sans
 
 /* ---------- chrome ---------- */
 .topbar,.bottombar{position:fixed;left:0;right:0;z-index:40;display:flex;align-items:center;justify-content:space-between;
-  padding:18px clamp(16px,3vw,42px);pointer-events:none}
-.topbar{top:0}
-.bottombar{bottom:0}
+  padding:18px clamp(16px,3vw,42px);pointer-events:none;transition:opacity .4s}
+.topbar{top:0;padding-top:max(18px,env(safe-area-inset-top))}
+.bottombar{bottom:0;padding-bottom:max(18px,env(safe-area-inset-bottom))}
+/* on short or non 16:9 screens the bars hug the stage instead of the window */
+body.anchored .topbar{top:var(--stage-top,0px)}
+body.anchored .bottombar{bottom:var(--stage-top,0px)}
 .topbar > *,.bottombar > *{pointer-events:auto}
 .lockup{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--navy)}
 .lockup img{display:block;width:150px;height:auto}
@@ -76,15 +87,33 @@ h1,h2,h3,h4,.num,.eyebrow,.tag,.day-label{font-family:"Work Sans",system-ui,sans
 .dot.on{background:var(--navy);width:40px}
 .counter{font-family:"Work Sans";font-weight:800;font-size:13px;letter-spacing:.1em;color:var(--navy)}
 .counter span{color:var(--muted);font-weight:600}
-.langbtn{font-family:"Work Sans";font-weight:800;font-size:11px;letter-spacing:.12em;border:1.5px solid var(--line);
-  background:var(--paper);color:var(--navy);border-radius:999px;padding:8px 14px;cursor:pointer;transition:.25s}
-.langbtn:hover{border-color:var(--navy);transform:translateY(-1px)}
+.langbtn,.presbtn{font-family:"Work Sans";font-weight:800;font-size:11px;letter-spacing:.12em;border:1.5px solid var(--line);
+  background:var(--paper);color:var(--navy);border-radius:999px;padding:8px 14px;cursor:pointer;transition:.25s;
+  display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+.langbtn:hover,.presbtn:hover{border-color:var(--navy);transform:translateY(-1px)}
+.presbtn svg{display:block}
+body.presenting .topbar,body.presenting .bottombar{opacity:.18}
+body.presenting .topbar:hover,body.presenting .bottombar:hover,body.idle-off .topbar,body.idle-off .bottombar{opacity:1}
+@media (hover:none),(pointer:coarse){body.presenting .topbar,body.presenting .bottombar{opacity:1}}
+.rotate{position:fixed;left:50%;bottom:76px;transform:translateX(-50%);z-index:50;display:none;align-items:center;gap:9px;
+  pointer-events:none;opacity:0;transition:opacity .5s;
+  background:var(--navy);color:#fff;border-radius:999px;padding:10px 18px;font-family:"Work Sans";font-weight:800;
+  font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;box-shadow:0 10px 30px rgba(2,17,103,.25)}
+.rotate.on{opacity:.95}
+.rotate svg{animation:tilt 2.6s ease-in-out infinite}
+@keyframes tilt{0%,100%{transform:rotate(0)}50%{transform:rotate(-88deg)}}
+.toast{position:fixed;left:50%;bottom:86px;transform:translate(-50%,14px);z-index:95;opacity:0;pointer-events:none;
+  background:var(--navy);color:#fff;border-radius:12px;padding:14px 20px;max-width:min(520px,86vw);
+  font-size:13.5px;line-height:1.5;box-shadow:0 18px 44px rgba(2,17,103,.3);transition:.4s}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.toast b{font-family:"Work Sans";display:block;margin-bottom:3px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
 .hint{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700}
 .progress{position:fixed;left:0;bottom:0;height:3px;background:var(--accent);z-index:45;transition:width .5s cubic-bezier(.65,0,.35,1);width:20%}
 
 /* ---------- stage ---------- */
-#wrap{position:fixed;inset:0;z-index:10;display:grid;place-items:center}
-#stage{width:var(--stage-w);height:var(--stage-h);position:relative;transform-origin:center center;overflow:clip}
+#wrap{position:fixed;inset:0;z-index:10;overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:var(--stage-w);height:var(--stage-h);
+  margin:calc(var(--stage-h) / -2) 0 0 calc(var(--stage-w) / -2);transform-origin:center center;overflow:clip}
 .slide{position:absolute;inset:0;padding:104px 96px 96px;opacity:0;visibility:hidden;
   transition:opacity .62s cubic-bezier(.4,0,.2,1),visibility .62s;display:flex;flex-direction:column}
 .slide.active{opacity:1;visibility:visible}
@@ -262,10 +291,10 @@ h1,h2,h3,h4,.num,.eyebrow,.tag,.day-label{font-family:"Work Sans",system-ui,sans
 @media (hover:none),(pointer:coarse){.cur,.cur-dot{display:none}}
 
 /* ---------- mobile ---------- */
-@media (max-width:880px),(orientation:portrait) and (max-width:1100px){
+@media (max-width:699px),(orientation:portrait) and (max-width:1180px){
   body{overflow:auto}
-  #wrap{position:static;display:block}
-  #stage{width:100%;height:auto;transform:none!important;overflow:visible}
+  #wrap{position:static;display:block;overflow:visible}
+  #stage{position:static;margin:0;width:100%;height:auto;transform:none!important;overflow:visible}
   .slide{position:static;opacity:1;visibility:visible;min-height:auto;padding:88px 20px 56px;border-bottom:1px solid var(--line)}
   .topbar{padding:14px 16px}
   .lockup img{width:104px}
@@ -311,7 +340,57 @@ h1,h2,h3,h4,.num,.eyebrow,.tag,.day-label{font-family:"Work Sans",system-ui,sans
   .close .fin{font-size:25px}
   .signature{text-align:left}
   .bottombar .dots,.bottombar .hint{display:none}
+  .topbar,.bottombar{background:rgba(251,245,242,.92);backdrop-filter:saturate(1.2) blur(10px);
+    border-bottom:1px solid var(--line)}
+  .bottombar{border-bottom:0;border-top:1px solid var(--line)}
   .nugget{flex-direction:column;align-items:flex-start;gap:8px}
+}
+
+/* ---------- tablet in portrait ---------- */
+@media (orientation:portrait) and (min-width:700px) and (max-width:1180px){
+  .slide{padding:110px 54px 84px;min-height:92vh;justify-content:center}
+  .lockup img{width:138px}
+  .lockup .tagline{display:inline;font-size:10px}
+  .byline{font-size:10.5px}
+  .byline b{font-size:13px}
+  #s1 h1{font-size:76px}
+  #s1 .kick{font-size:19px;max-width:560px}
+  #s1 .names{display:grid;grid-template-columns:1fr 1fr;gap:0 34px}
+  #s1 .nm{border-bottom:1px solid var(--line)}
+  #s1 .nm h3{font-size:32px}
+  .takeaway{font-size:40px!important;max-width:none!important}
+  .stats{gap:38px}
+  .stat .num{font-size:46px}
+  .strip{grid-template-columns:repeat(2,1fr);gap:16px}
+  .strip .shotbox{height:184px}
+  .days{grid-template-columns:1fr 1fr;gap:30px 40px}
+  .day p{font-size:16px}
+  .ring{width:340px;height:340px;display:block;margin:6px auto 0}
+  .ring > svg{display:block}
+  .ring .core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:200px;text-align:center;margin:0}
+  .orbit,.orbit.o1,.orbit.o2,.orbit.o3{position:absolute;transform:translateX(-50%);flex-direction:column;
+    align-items:center;gap:8px;width:164px;text-align:center}
+  .orbit.o1{left:170px;top:14px}
+  .orbit.o2{left:62px;top:200px}
+  .orbit.o3{left:278px;top:200px}
+  .orbit .bub{width:56px;height:56px}
+  .igor-shot{width:100%;height:190px;margin-top:30px}
+  .weekend{padding:30px}
+  .weekend .banner{height:190px;margin:-30px -30px 24px}
+  .weekend .big{font-size:32px}
+  .who .chip{flex:1 1 0}
+  .bars{height:260px}
+  .recharge{flex-direction:row;gap:14px}
+  .rc{flex:1;flex-direction:column;align-items:flex-start;gap:12px}
+  .rc .thumb{width:100%;height:96px}
+  .mrow{grid-template-columns:190px repeat(3,1fr);min-height:78px;padding:0;gap:0}
+  .mrow.h{display:grid;min-height:54px}
+  .cell::before{display:none}
+  .cell p{font-size:13.5px}
+  .close .fin{font-size:34px}
+  .close{flex-direction:row;align-items:flex-end}
+  .signature{text-align:right}
+  .bottombar .dots{display:flex}
 }
 @media (prefers-reduced-motion:reduce){
   *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
@@ -604,6 +683,10 @@ h1,h2,h3,h4,.num,.eyebrow,.tag,.day-label{font-family:"Work Sans",system-ui,sans
 <footer class="bottombar">
   <div class="ctrl">
     <button class="langbtn" id="lang" aria-label="Switch language">PT</button>
+    <button class="presbtn" id="pres" aria-label="Presentation mode">
+      <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 5V1h4M13 5V1H9M1 9v4h4M13 9v4H9"/></svg>
+      <span id="presTxt" data-pt="Apresentar">Present</span>
+    </button>
     <span class="hint" data-pt="Setas ou espaço">Arrows or space</span>
   </div>
   <div class="ctrl">
@@ -619,6 +702,11 @@ h1,h2,h3,h4,.num,.eyebrow,.tag,.day-label{font-family:"Work Sans",system-ui,sans
   <button class="n" id="lbn" aria-label="Next image">&rsaquo;</button>
   <div class="cap" id="lbcap"></div>
 </div>
+<div class="rotate" id="rot">
+  <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="1" width="10" height="14" rx="1.6"/></svg>
+  <span data-pt="Gire o iPad para apresentar">Rotate to present</span>
+</div>
+<div class="toast" id="toast" role="status"></div>
 <div class="cur" id="cc" aria-hidden="true"></div>
 <div class="cur-dot" id="cd" aria-hidden="true"></div>
 
@@ -642,6 +730,7 @@ h1,h2,h3,h4,.num,.eyebrow,.tag,.day-label{font-family:"Work Sans",system-ui,sans
   });
   var dots=[].slice.call(dotsBox.children);
 
+  var STACK='(max-width:699px),(orientation:portrait) and (max-width:1180px)';
   var io=null;
   function watch(on){
     if(on){
@@ -662,12 +751,15 @@ h1,h2,h3,h4,.num,.eyebrow,.tag,.day-label{font-family:"Work Sans",system-ui,sans
   }
 
   function fit(){
-    mobile=window.matchMedia('(max-width:880px),(orientation:portrait) and (max-width:1100px)').matches;
+    mobile=window.matchMedia(STACK).matches;
     document.body.classList.toggle('is-mobile',mobile);
     watch(mobile);
     if(mobile){stage.style.transform='';slides.forEach(function(s){s.classList.add('active')});return;}
     var s=Math.min(window.innerWidth/1600,window.innerHeight/900);
     stage.style.transform='scale('+s+')';
+    var gap=(window.innerHeight-900*s)/2;
+    document.body.classList.toggle('anchored',gap>70);
+    document.documentElement.style.setProperty('--stage-top',Math.max(0,gap)+'px');
     slides.forEach(function(sl,n){sl.classList.toggle('active',n===i)});
   }
 
@@ -706,6 +798,78 @@ h1,h2,h3,h4,.num,.eyebrow,.tag,.day-label{font-family:"Work Sans",system-ui,sans
     play(a);
   }
 
+  // presentation mode
+  var pt=false;
+  var body=document.body, presBtn=document.getElementById('pres'), presTxt=document.getElementById('presTxt');
+  var toast=document.getElementById('toast'), rot=document.getElementById('rot'), wake=null, tId=null;
+  var standalone=window.matchMedia('(display-mode:fullscreen),(display-mode:standalone)').matches||navigator.standalone===true;
+  function say(title,msg,ms){
+    toast.innerHTML='<b>'+title+'</b>'+msg;
+    toast.classList.add('on'); clearTimeout(tId);
+    tId=setTimeout(function(){toast.classList.remove('on')},ms||6500);
+  }
+  function fsEl(){return document.fullscreenElement||document.webkitFullscreenElement}
+  function canFs(){var e=document.documentElement;return !!(e.requestFullscreen||e.webkitRequestFullscreen)}
+  async function lockWake(){
+    try{ if('wakeLock' in navigator) wake=await navigator.wakeLock.request('screen'); }catch(err){}
+  }
+  function releaseWake(){ try{ if(wake){wake.release();wake=null} }catch(err){} }
+  function setPres(on){
+    body.classList.toggle('presenting',on);
+    presTxt.textContent = on ? (pt?'Sair':'Exit') : (pt?'Apresentar':'Present');
+    presTxt.setAttribute('data-pt', on?'Sair':'Apresentar');
+    presTxt.setAttribute('data-en', on?'Exit':'Present');
+    if(on){lockWake()}else{releaseWake()}
+  }
+  function ipadTip(){
+    say(pt?'Modo apresentação':'Presentation mode',
+        pt?'Este navegador não deixa esconder as barras. Para tela cheia de verdade no iPad: botão Compartilhar, depois Adicionar à Tela de Início, e abra a apresentação por lá.'
+          :'This browser cannot hide its bars. For real full screen on iPad: Share button, then Add to Home Screen, and open the deck from there.',9000);
+  }
+  function togglePres(){
+    var e=document.documentElement;
+    if(fsEl()){(document.exitFullscreen||document.webkitExitFullscreen).call(document);return}
+    if(body.classList.contains('presenting')){setPres(false);return}
+    if(canFs()){
+      var r=(e.requestFullscreen||e.webkitRequestFullscreen).call(e,{navigationUI:'hide'});
+      setPres(true);
+      if(r&&r.catch)r.catch(function(){ if(!standalone)ipadTip() });
+      return;
+    }
+    // iPad / iPhone Safari: no fullscreen API, dim the chrome and explain the home screen trick
+    setPres(true);
+    if(!standalone)ipadTip();
+  }
+  presBtn.addEventListener('click',togglePres);
+  document.addEventListener('fullscreenchange',function(){setPres(!!fsEl())});
+  document.addEventListener('webkitfullscreenchange',function(){setPres(!!fsEl())});
+  if(standalone){presBtn.style.display='none';lockWake()}
+
+  // wake lock comes back when the tab is visible again
+  document.addEventListener('visibilitychange',function(){
+    if(document.visibilityState==='visible'&&body.classList.contains('presenting'))lockWake();
+  });
+
+  // rotate hint on portrait tablets
+  var rotT=null;
+  function rotHint(){
+    var show=window.matchMedia('(orientation:portrait) and (min-width:700px) and (max-width:1180px)').matches;
+    rot.style.display=show?'flex':'none';
+    clearTimeout(rotT);
+    if(show){
+      requestAnimationFrame(function(){rot.classList.add('on')});
+      rotT=setTimeout(function(){rot.classList.remove('on')},6000);
+    }else{rot.classList.remove('on')}
+  }
+  window.addEventListener('resize',rotHint); window.addEventListener('orientationchange',rotHint); rotHint();
+
+  // idle: bring the bars back while the mouse moves
+  var idleT=null;
+  window.addEventListener('mousemove',function(){
+    body.classList.add('idle-off'); clearTimeout(idleT);
+    idleT=setTimeout(function(){body.classList.remove('idle-off')},2200);
+  });
+
   // lightbox
   var lb=document.getElementById('lb'),lbimg=document.getElementById('lbimg'),lbcap=document.getElementById('lbcap');
   var shots=[].slice.call(document.querySelectorAll('.shot')),li=0,lastFocus=null;
@@ -739,6 +903,7 @@ h1,h2,h3,h4,.num,.eyebrow,.tag,.day-label{font-family:"Work Sans",system-ui,sans
       if(e.key==='ArrowLeft'){e.preventDefault();show(li-1)}
       return;
     }
+    if(e.key==='f'||e.key==='F'||e.key==='p'||e.key==='P'){e.preventDefault();togglePres();return}
     if(['ArrowRight','ArrowDown','PageDown',' ','Enter'].indexOf(e.key)>-1){e.preventDefault();go(i+1)}
     if(['ArrowLeft','ArrowUp','PageUp'].indexOf(e.key)>-1){e.preventDefault();go(i-1)}
     if(e.key==='Home')go(0); if(e.key==='End')go(total-1);
@@ -763,7 +928,7 @@ h1,h2,h3,h4,.num,.eyebrow,.tag,.day-label{font-family:"Work Sans",system-ui,sans
   },{passive:true});
 
   // language toggle
-  var pt=false,btn=document.getElementById('lang');
+  var btn=document.getElementById('lang');
   var nodes=[].slice.call(document.querySelectorAll('[data-pt]'));
   nodes.forEach(function(n){n.setAttribute('data-en',n.innerHTML)});
   btn.addEventListener('click',function(){
